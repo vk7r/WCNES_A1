@@ -2,13 +2,16 @@
 constellation = [1 + 0i, 0.5 + 0.5i, 0 + 1i, -0.5 + 0.5i, -1 + 0i, -0.5 - 0.5i, 0 - 1i, 0.5 - 0.5i];
 
 % Number of symbols
-numSymbols = 1000;
+numSymbols = 999;
 
 % Generate random data (symbol indices)
-data = randi([0 7], numSymbols, 1); % Random data mapped to 0 to 7 (8 symbols in total)
+% data = randi([0 7], numSymbols, 1); % Random data mapped to 0 to 7 (8 symbols in total)
+data = randi([0 1], numSymbols, 1);
+symbol_seq = reshape(data, [], 3);  % Reshape into groups of 3 bits
+symbol_seq_dec = bi2de(symbol_seq, 'left-msb');  % Convert binary to decimal
 
 % Map the data to the custom constellation points
-modSymbols = constellation(data + 1); % Add 1 to align data with constellation indices
+modSymbols = constellation(symbol_seq_dec + 1); % Add 1 to align data with constellation indices
 
 % Define SNR values for testing
 SNR_values = [10, 20];

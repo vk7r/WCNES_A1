@@ -15,9 +15,11 @@ numSymbols = 1000;
 
 % Generate random data (symbol indices)
 data = randi([0 1], 1000, 1);
-symbol_seq = reshape(sequence, [], 4);  % Reshape into groups of 4 bits
+symbol_seq = reshape(data, [], 4);  % Reshape into groups of 4 bits
+% disp(size(symbol_seq))
+seq_dec = bi2de(symbol_seq);
 % Map the data to the custom constellation points
-modSymbols = constellation(dataSym + 1); % Add 1 to align data with constellation indices
+modSymbols = constellation(seq_dec + 1); % Add 1 to align data with constellation indices
 % disp(length(dataSym));
 
 % Define SNR values for testing

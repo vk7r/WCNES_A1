@@ -67,3 +67,26 @@ ylabel('BER');
 title('BER vs. Eb/No for 8-PSK and 16-PSK');
 legend('show');
 grid on;
+
+
+
+% Custom 16-QAM demodulation function to find closest constellation point
+function rxSym = qam_demod(rxSig, constellation)
+    % Ensure that the output vector matches the size of the received signal
+    numSymbols = length(rxSig);  
+    rxSym = zeros(numSymbols, 1);  % Pre-allocate the output for symbol indices
+
+    % Loop through each received symbol
+    for i = 1:numSymbols
+        % Calculate the distance from each received symbol to the constellation points
+        % disp(abs(rxSig(i) - constellation));
+        distances = abs(rxSig(i) - constellation);  % This gives a vector of distances
+        % disp(distances);
+        % disp(min(distances));
+
+        % Find the index of the closest constellation point
+        [~, rxSym(i)] = min(distances);  % rxSym(i) stores the index of the closest point (dec number 1 to 16)
+        rxSym(i) = rxSym(i) - 1;
+    end
+    % disp(rxSym);
+end
