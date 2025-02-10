@@ -43,20 +43,20 @@ for n = 1:length(EbNoVec)
         numSymbols = 1000;
         
         % Generate random data (symbol indices)
-        data = randi([0 15], numSymbols, 1); % Random data mapped to 0 to 15 (16 symbols in total)
+        % Generate the random sequence
+        data = randi([0 1], 1000, 1);
+        symbol_seq = reshape(sequence, [], 4);  % Reshape into groups of 4 bits
         
         % Map the data to the custom constellation points
-        modSymbols = constellation(data + 1); % Add 1 to align data with constellation indices
+        modSymbols = constellation(dataSym + 1); % Add 1 to align data with constellation indices
         
         %--------------------------------------------------------------------------------------
 
 
         % Pass through AWGN channel:
-        rxSig = awgn(modSymbols, snrdB); % Additive White Gaussian Noise with 
-                                     % increasing snrdB
+        rxSig = awgn(modSymbols, snrdB); % Additive White Gaussian Noise with increasing snrdB
 
                                    
-                                     
         % Your demodulator here:
         rxSym = qam_demod(rxSig, constellation);
         
@@ -70,7 +70,8 @@ for n = 1:length(EbNoVec)
         % disp(dataIn);
         
         % Calculate the number of bit errors
-        fprintf("size in: %i,  size out: %i\n", size(dataIn), size(dataOut));
+        % fprintf("size in: %i,  size out: %i\n", size(dataIn), size(dataOut));
+        % disp(dataOut);
         nErrors = biterr(dataIn,dataOut);
         
         % Increment the error and bit counters
@@ -86,13 +87,13 @@ for n = 1:length(EbNoVec)
 end
 
 % Plot the BER curve for 8-QPSK using semilogy
-% figure;
-% semilogy(EbNoVec, berEst, 'o-', 'DisplayName', '8-QPSK'); % Plot 8-QPSK
-% xlabel('Eb/No (dB)');
-% ylabel('BER');
-% title('BER vs. Eb/No for 8-QPSK');
-% legend('show');
-% grid on;
+figure;
+semilogy(EbNoVec, berEst, 'o-', 'DisplayName', '16 QAM'); % Plot 8-QPSK
+xlabel('Eb/No (dB)');
+ylabel('BER');
+title('BER vs. Eb/No for 16 QAM');
+legend('show');
+grid on;
 
 
 % Custom 16-QAM demodulation function to find closest constellation point

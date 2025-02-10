@@ -14,10 +14,11 @@ constellation = constellation / scale_factor;
 numSymbols = 1000;
 
 % Generate random data (symbol indices)
-data = randi([0 15], numSymbols, 1); % Random data mapped to 0 to 15 (16 symbols in total)
-
+data = randi([0 1], 1000, 1);
+symbol_seq = reshape(sequence, [], 4);  % Reshape into groups of 4 bits
 % Map the data to the custom constellation points
-modSymbols = constellation(data + 1); % Add 1 to align data with constellation indices
+modSymbols = constellation(dataSym + 1); % Add 1 to align data with constellation indices
+% disp(length(dataSym));
 
 % Define SNR values for testing
 SNR_values = [10, 20];
