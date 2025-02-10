@@ -42,14 +42,15 @@ for n = 1:length(EbNoVec)
         % Number of symbols
         numSymbols = 1000;
         
-        % Generate random data (symbol indices)
-        % Generate the random sequence
+        % Generate random data
         data = randi([0 1], 1000, 1);
-        symbol_seq = reshape(sequence, [], 4);  % Reshape into groups of 4 bits
-        
+        symbol_seq = reshape(data, [], 4);  % Reshape into groups of 4 bits
+        dataIn = symbol_seq;
+        % disp(size(symbol_seq))
+        seq_dec = bi2de(symbol_seq);
         % Map the data to the custom constellation points
-        modSymbols = constellation(dataSym + 1); % Add 1 to align data with constellation indices
-        
+        modSymbols = constellation(seq_dec + 1); % Add 1 to align data with constellation indices
+ 
         %--------------------------------------------------------------------------------------
 
 
@@ -71,7 +72,7 @@ for n = 1:length(EbNoVec)
         
         % Calculate the number of bit errors
         % fprintf("size in: %i,  size out: %i\n", size(dataIn), size(dataOut));
-        % disp(dataOut);
+        % disp(dataIn);
         nErrors = biterr(dataIn,dataOut);
         
         % Increment the error and bit counters

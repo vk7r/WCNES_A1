@@ -13,7 +13,7 @@ constellation = constellation / scale_factor;
 % Number of symbols
 numSymbols = 1000;
 
-% Generate random data (symbol indices)
+% Generate random data
 data = randi([0 1], 1000, 1);
 symbol_seq = reshape(data, [], 4);  % Reshape into groups of 4 bits
 % disp(size(symbol_seq))
